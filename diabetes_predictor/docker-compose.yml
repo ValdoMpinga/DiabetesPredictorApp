@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  diabetes_mellitus:
+    build: .
+    command: gunicorn diabetes_predictor.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongo
+    environment:
+      - DATABASE_URL=mongodb://mongo:27017/diabetes_mellitusDB
+      - DJANGO_SETTINGS_MODULE=diabetes_predictor.settings
+      - PYTHONUNBUFFERED=1
+
+volumes:
+  mongo_data:

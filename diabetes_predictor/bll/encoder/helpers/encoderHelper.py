@@ -2,7 +2,7 @@ import re
 from enum import Enum
 from .encoderEnumerations import *
 
-#Those clases handle the input and return the corresponding binary output
+# These classes handle the input and return the corresponding binary output
 
 class EncoderHelper():
     
@@ -13,7 +13,7 @@ class EncoderHelper():
             elif (sex == SexEnum.female.value):
                 return 0
         except:
-            print("Please check if you inserted the right values")
+            print("Error in sexHandler: Please check if you inserted the right values on the gender")
 
     def ageHandler(age):
         try:
@@ -34,7 +34,7 @@ class EncoderHelper():
                 ageObject['age2'] = 1
                 ageObject['age3'] = 0
                 ageObject['age4'] = 0
-            elif(age == AgeEnum.ageBetween45And54.value):
+            elif(age == AgeEnum.ageBetween55And64.value):
                 ageObject['age1'] = 0
                 ageObject['age2'] = 0
                 ageObject['age3'] = 1
@@ -47,18 +47,18 @@ class EncoderHelper():
 
             return ageObject
         except:
-            print("Please check if you inserted the right values")
+            print("Error in ageHandler: Please check if you inserted the right values")
 
     def weightHandler(weight):
         try:
-            finalWeight = re.sub('\D', '', weight)
+            finalWeight = re.sub('\D', '', str(weight))
             return finalWeight
         except:
-            print("Please check if you inserted the right values")
+            print("Error in weightHandler: Please check if you inserted the right values on the weight")
 
     def heightHandler(height):
         try:
-            finalHeight = re.sub('\D', '', height)
+            finalHeight = re.sub('\D', '', str(height))
             finalHeight = int(finalHeight)/100
 
             if finalHeight < 1:
@@ -68,7 +68,7 @@ class EncoderHelper():
 
             return finalHeight
         except:
-            print("Please check if you inserted the right values")
+            print("Error in heightHandler: Please check if you inserted the right values on the height")
 
     def waistHandler(waist):
         try:
@@ -102,20 +102,20 @@ class EncoderHelper():
 
             return waistObject
         except:
-            print("Please check if you inserted the right values")
+            print("Error in waistHandler: Please check if you inserted the right values")
 
     def imcHandler(weight, height):
         try:
             weight = float(weight)
             height = float(height)
-            imc = (weight / (height * height))/45 #IMC official formula https://www.lusiadas.pt/blog/prevencao-estilo-vida/nutricao-dieta/imc-que 
+            imc = (weight / (height * height))/45 # IMC official formula https://www.lusiadas.pt/blog/prevencao-estilo-vida/nutricao-dieta/imc-que 
             if imc > 1:
                 return 1
             elif imc <= 1:
                 return 0
 
         except:
-            print("Please check if you inserted the right values")
+            print("Error in imcHandler: Please check if you inserted the right values")
 
     def exerciseHandler(doesExercise):
         try:
@@ -124,7 +124,7 @@ class EncoderHelper():
             elif (doesExercise == ExerciseEnum.no.value):
                 return 0
         except:
-            print("Please check if you inserted the right values")
+            print("Error in exerciseHandler: Please check if you inserted the right values")
 
     def hypertensionPills(takePills):
         try:
@@ -133,7 +133,7 @@ class EncoderHelper():
             elif (takePills == HypertensionEnum.no.value):
                 return 0
         except:
-            print("Please check if you inserted the right values")
+            print("Error in hypertensionPills: Please check if you inserted the right values")
 
     def fruitsAndVagetableHandler(eatFuit):
         try:
@@ -158,7 +158,7 @@ class EncoderHelper():
 
             return fruitObject
         except:
-            print("Please check if you inserted the right values")
+            print("Error in fruitsAndVagetableHandler: Please check if you inserted the right values")
 
     def diabeticFamilyHandler(diabeticFamily):
         try:
@@ -192,7 +192,7 @@ class EncoderHelper():
 
             return diabeticFamilyObject
         except:
-            print("Please check if you inserted the right values")
+            print("Error in diabeticFamilyHandler: Please check if you inserted the right values")
 
     def fatsHandler(eatFats):
         try:
@@ -201,7 +201,7 @@ class EncoderHelper():
             elif(eatFats == EatsAlotFatsEnum.no.value):
                 return 0
         except:
-            print("Please check if you inserted the right values")
+            print("Error in fatsHandler: Please check if you inserted the right values")
 
     def smokeHandler(smoke):
         try:
@@ -235,7 +235,7 @@ class EncoderHelper():
 
             return smokeObject
         except:
-            print("Please check if you inserted the right values")
+            print("Error in smokeHandler: Please check if you inserted the right values")
 
     def highBloodGlucoseHandler(bloodGlucose):
         try:
@@ -260,31 +260,30 @@ class EncoderHelper():
 
             return highBloodGlucoseObject
         except:
-            print("Please check if you inserted the right values")
+            print("Error in highBloodGlucoseHandler: Please check if you inserted the right values")
 
     def glucoseAnalysisHandler(analysis):
         try:
-
             glucoseAnalysisObject = {
                 'glucoseAnalysis1': 0,
                 'glucoseAnalysis2': 0,
             }
 
-            if(analysis == GlucoseAnalysisEnum.dontKnow.value):
+            if analysis.lower() == GlucoseAnalysisEnum.dontKnow.value.lower():
                 glucoseAnalysisObject['glucoseAnalysis1'] = 1
                 glucoseAnalysisObject['glucoseAnalysis2'] = 0
             else:
                 analysisResult = re.sub('\D', '', analysis)
-                analysisResult = int(analysisResult)
-                glucoseAnalysisObject['glucoseAnalysis1'] = 1
-                if analysisResult/450 > 1:
-                    glucoseAnalysisObject['glucoseAnalysis2'] = 1
+                if analysisResult:
+                    analysisResult = int(analysisResult)
+                    glucoseAnalysisObject['glucoseAnalysis1'] = 0
+                    glucoseAnalysisObject['glucoseAnalysis2'] = 1 if analysisResult > 450 else 0
                 else:
-                    glucoseAnalysisObject['glucoseAnalysis2'] = 0
+                    print("Error in glucoseAnalysisHandler: Invalid glucose analysis input")
 
             return glucoseAnalysisObject
         except:
-            print("Please check if you inserted the right values")
+            print("Error in glucoseAnalysisHandler: Please check if you inserted the right values")
 
     def glucoseLevelChangeHandler(glucoseChange):
         try:
@@ -309,7 +308,7 @@ class EncoderHelper():
 
             return glucoseLeveleObject
         except:
-            print("Please check if you inserted the right values")
+            print("Error in glucoseLevelChangeHandler: Please check if you inserted the right values")
 
     def womanGlucoseChangeHandler(womanGlucose):
         try:
@@ -335,7 +334,7 @@ class EncoderHelper():
                 woamnGlucoseObject['womanGlucoseChange2'] = 0
                 woamnGlucoseObject['womanGlucoseChange3'] = 1
                 woamnGlucoseObject['womanGlucoseChange4'] = 0
-            elif(womanGlucose == highBloodGlucoseEnum.dontKnow.value):
+            elif(womanGlucose == WomanGlucoseChangeEnum.dontKnow.value):
                 woamnGlucoseObject['womanGlucoseChange1'] = 0
                 woamnGlucoseObject['womanGlucoseChange2'] = 0
                 woamnGlucoseObject['womanGlucoseChange3'] = 0
@@ -343,7 +342,7 @@ class EncoderHelper():
 
             return woamnGlucoseObject
         except:
-            print("Please check if you inserted the right values")
+            print("Error in womanGlucoseChangeHandler: Please check if you inserted the right values")
 
     def areYouDiabeticHandler(diabetic):
         try:
@@ -357,5 +356,4 @@ class EncoderHelper():
 
             return AreYouDiabetic
         except:
-            print("Please check if you inserted the right values")
-
+            print("Error in areYouDiabeticHandler: Please check if you inserted the right values")

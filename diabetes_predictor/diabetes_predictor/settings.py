@@ -88,9 +88,9 @@ WSGI_APPLICATION = 'diabetes_predictor.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'diabetes_predictorDB',
+        'NAME': 'diabetes_mellitusDB',
         'CLIENT': {
-            'host': config('DATABASE')
+            'host': os.getenv('DATABASE_URL'),
         }
     }
 }
@@ -145,7 +145,7 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 GRAPH_MODELS = {
     'all_applications': True,

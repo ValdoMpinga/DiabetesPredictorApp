@@ -8,16 +8,12 @@ h6 {
   border: 2px solid #93deff !important;
   width: 400px !important;
   height: 500px !important;
-  /* display: grid !important;
-  grid-template-rows: 10% 90% !important; */
 }
 
 .outputBox {
   border: 2px solid #323643 !important;
   width: 400px !important;
   height: 500px !important;
-  /* display: grid !important;
-  grid-template-rows: 10% 90% !important; */
 }
 
 .boxContainer {
@@ -64,4 +60,8 @@ progress {
 
 #predictionHeader {
   color: #93deff !important;
+}
+
+.disableDiv {
+  display: none;
 }
